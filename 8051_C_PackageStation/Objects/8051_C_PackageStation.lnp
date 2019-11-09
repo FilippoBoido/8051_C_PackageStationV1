@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\8051_C_PackageStation" 
+PRINT(".\Listings\8051_C_PackageStation.m51") RAMSIZE(256) 
