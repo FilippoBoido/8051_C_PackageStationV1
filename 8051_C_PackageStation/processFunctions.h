@@ -1,72 +1,12 @@
-void initIOs(void)
-{
-	startConveyors			 		 = false;
-	palletizerChainBack		 	 = false;
-	palletizerChainForw		 	 = false;
-	palletizerConvBack		 	 = false;
-	palletizerConvForw		 	 = false;
-	palletizerOpen			 		 = false;
-	palletizerClamp			 		 = false;
-	palletizerElevatorDown	 = false;
-	palletizerElevatorUp		 = false;
-	palletizerPush			 		 = false;
-	palletizerElevMoveLimit	 = false;
-	startRollerConveyors		 = false;
-	emitter1								 = false;
-	emitter2								 = false;
-	greenLight							 = false;
-	redLight								 = false;
-	siren										 = false;
-	elevatorUp							 = false;
-	elevatorDown						 = false;
-	elevatorBack						 = false;
-	elevatorForw						 = false;
-	startButtonLight				 = false;
-}
+#ifndef PROC_FUNC_H
+#define PROC_FUNC_H
 
-void stopConveyors(void)
-{
-	startConveyors = false;
-	startRollerConveyors = false;	
-}
+extern void initIOs(void);
+extern void stopConveyors(void);
+extern void stopElevators(void);
+extern void stopPalletizer(void);
+extern void errorLight(void);
+extern void runLight(void);
+extern void noLight(void);
 
-void stopElevators(void)
-{
-	elevatorUp = false;
-	elevatorDown = false;
-	elevatorBack = false;
-	elevatorForw = false;
-}
-
-void stopPalletizer(void)
-{
-	palletizerChainBack = false;
-	palletizerChainForw = false;
-	palletizerConvBack = false;
-	palletizerConvForw = false;
-	palletizerOpen = false;
-	palletizerClamp = false;
-	palletizerElevatorDown = false;
-	palletizerElevatorUp = false;
-	palletizerPush = false;
-	palletizerElevMoveLimit = false;
-}
-
-void errorLight(void)
-{
-	redLight = true;
-	greenLight = false;
-
-}
-
-void runLight(void)
-{
-	redLight = false;
-	greenLight = true;
-}
-
-void noLight(void)
-{
-	redLight = false;
-	greenLight = false;
-}
+#endif

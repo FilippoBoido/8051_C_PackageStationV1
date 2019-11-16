@@ -1,14 +1,21 @@
-uint step1;
-uint step2;
+#include "system.h"
 
-uchar procHandshake;
-uchar packageCounter = 0;
+#ifndef PROC_VARS_H
+#define PROC_VARS_H
 
-uchar retVal;
+extern uint step1;
+extern uint step2;
 
-bit secondRound;
+extern uchar procHandshake;
+extern uchar packageCounter;
 
-const uchar MAX_COUNTER = 2;
+extern uchar retVal;
+
+extern bit secondRound;
+
+extern uchar MAX_COUNTER;
 
 //timers
-uint palletizerTimer = 0;
+extern uint palletizerTimer;
+
+#endif

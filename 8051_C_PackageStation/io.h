@@ -1,3 +1,8 @@
+#include <reg51.h>
+
+#ifndef IO_H
+#define IO_H
+
 sbit safetyOK					 			 		= P0^0;
 sbit palletizerElevMoving		 		= P0^1;
 sbit pallElevBackLimit			 		= P0^2;
@@ -34,3 +39,4 @@ sbit elevatorBack						 		= P3^5;
 sbit elevatorForw						 		= P3^6;
 sbit startButtonLight				 		= P3^7;
 
+#endif

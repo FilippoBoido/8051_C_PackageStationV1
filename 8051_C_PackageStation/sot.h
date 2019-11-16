@@ -1,3 +1,6 @@
+#ifndef SOT_H
+#define SOT_H
+
 struct ST_SotPayload 
 {
 		unsigned char aSotPayload[11];
@@ -43,3 +46,4 @@ enum
 	eSotSlaveMode_independent
 };
 
+#endif

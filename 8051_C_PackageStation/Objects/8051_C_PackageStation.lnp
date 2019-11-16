@@ -1,3 +1,9 @@
-".\Objects\main.obj" 
+".\Objects\main.obj",
+".\Objects\process1.obj",
+".\Objects\process2.obj",
+".\Objects\processFunctions.obj",
+".\Objects\utilities.obj",
+".\Objects\system.obj",
+".\Objects\processVars.obj" 
 TO ".\Objects\8051_C_PackageStation" 
 PRINT(".\Listings\8051_C_PackageStation.m51") RAMSIZE(256) 

@@ -1,0 +1,104 @@
+C51 COMPILER V9.60.0.0   PROCESSFUNCTIONS                                                  11/16/2019 23:18:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PROCESSFUNCTIONS
+OBJECT MODULE PLACED IN .\Objects\processFunctions.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE processFunctions.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\processFunctions.lst) TABS(2) OBJECT(.\Objects\processFunctions.obj)
+
+line level    source
+
+   1          #include "io.h"
+   2          #include "system.h"
+   3          
+   4          void initIOs(void)
+   5          {
+   6   1        startConveyors           = false;
+   7   1        palletizerChainBack      = false;
+   8   1        palletizerChainForw      = false;
+   9   1        palletizerConvBack       = false;
+  10   1        palletizerConvForw       = false;
+  11   1        palletizerOpen           = false;
+  12   1        palletizerClamp          = false;
+  13   1        palletizerElevatorDown   = false;
+  14   1        palletizerElevatorUp     = false;
+  15   1        palletizerPush           = false;
+  16   1        palletizerElevMoveLimit  = false;
+  17   1        startRollerConveyors     = false;
+  18   1        emitter1                 = false;
+  19   1        emitter2                 = false;
+  20   1        greenLight               = false;
+  21   1        redLight                 = false;
+  22   1        siren                    = false;
+  23   1        elevatorUp               = false;
+  24   1        elevatorDown             = false;
+  25   1        elevatorBack             = false;
+  26   1        elevatorForw             = false;
+  27   1        startButtonLight         = false;
+  28   1      }
+  29          
+  30          void stopConveyors(void)
+  31          {
+  32   1        startConveyors = false;
+  33   1        startRollerConveyors = false; 
+  34   1      }
+  35          
+  36          void stopElevators(void)
+  37          {
+  38   1        elevatorUp = false;
+  39   1        elevatorDown = false;
+  40   1        elevatorBack = false;
+  41   1        elevatorForw = false;
+  42   1      }
+  43          
+  44          void stopPalletizer(void)
+  45          {
+  46   1        palletizerChainBack = false;
+  47   1        palletizerChainForw = false;
+  48   1        palletizerConvBack = false;
+  49   1        palletizerConvForw = false;
+  50   1        palletizerOpen = false;
+  51   1        palletizerClamp = false;
+  52   1        palletizerElevatorDown = false;
+  53   1        palletizerElevatorUp = false;
+  54   1        palletizerPush = false;
+C51 COMPILER V9.60.0.0   PROCESSFUNCTIONS                                                  11/16/2019 23:18:58 PAGE 2   
+
+  55   1        palletizerElevMoveLimit = false;
+  56   1      }
+  57          
+  58          void errorLight(void)
+  59          {
+  60   1        redLight = true;
+  61   1        greenLight = false;
+  62   1      
+  63   1      }
+  64          
+  65          void runLight(void)
+  66          {
+  67   1        redLight = false;
+  68   1        greenLight = true;
+  69   1      }
+  70          
+  71          void noLight(void)
+  72          {
+  73   1        redLight = false;
+  74   1        greenLight = false;
+  75   1      }
+*** WARNING C230 IN LINE 75 OF processFunctions.c: 'stSotPayloadIn': uses undefined struct/union tag 'ST_SotPayload'
+*** WARNING C230 IN LINE 75 OF processFunctions.c: 'stSotPayloadOut': uses undefined struct/union tag 'ST_SotPayload'
+*** WARNING C230 IN LINE 75 OF processFunctions.c: 'stEmptyPayload': uses undefined struct/union tag 'ST_SotPayload'
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     95    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

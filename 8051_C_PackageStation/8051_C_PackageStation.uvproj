@@ -421,6 +421,36 @@
               <FileType>5</FileType>
               <FilePath>.\utilities.h</FilePath>
             </File>
+            <File>
+              <FileName>process1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\process1.c</FilePath>
+            </File>
+            <File>
+              <FileName>process2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\process2.c</FilePath>
+            </File>
+            <File>
+              <FileName>processFunctions.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\processFunctions.c</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\utilities.c</FilePath>
+            </File>
+            <File>
+              <FileName>system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\system.c</FilePath>
+            </File>
+            <File>
+              <FileName>processVars.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\processVars.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

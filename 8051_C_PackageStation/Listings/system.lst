@@ -1,0 +1,185 @@
+C51 COMPILER V9.60.0.0   SYSTEM                                                            11/16/2019 23:18:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SYSTEM
+OBJECT MODULE PLACED IN .\Objects\system.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE system.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\sy
+                    -stem.lst) TABS(2) OBJECT(.\Objects\system.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include "sot.h"
+   3          #include "system.h"
+   4          
+   5          bit __systemError;// = 0xA7;
+   6          bit __protocolError;// = 0xB2;
+   7          
+   8          
+   9          uchar counterRead = 1;
+  10          uchar counterWrite = 1;
+  11          
+  12          bit sendSotPayload;
+  13          
+  14          struct ST_SotPayload stSotPayloadOut;
+  15          struct ST_SotPayload stSotPayloadIn;
+  16          struct ST_SotPayload stEmptyPayload;
+  17          
+  18          
+  19          void init(void)
+  20          {
+  21   1        __protocolError = 0;
+  22   1        __systemError = 0;
+  23   1        
+  24   1        //standard configuration at start
+  25   1        P0 = 0xFF;
+  26   1        P1 = 0x00;
+  27   1        P2 = 0x00;
+  28   1        P3 = 0x03;
+  29   1      
+  30   1        SCON = 0x52;
+  31   1        PCON = 0x80;
+  32   1        TMOD = 0;
+  33   1        TMOD |= 0x21;
+  34   1        TH1 = 245;
+  35   1        TR1 = 1;
+  36   1        
+  37   1        counterWrite = 1;
+  38   1        counterRead = 1;
+  39   1        sendSotPayload = 0;
+  40   1              
+  41   1      }
+  42          
+  43          void cycleStart(void)
+  44          {
+  45   1        //Zeit zurücksetzen         
+  46   1        TR0 = 0;          
+  47   1        //1ms cycle         
+  48   1        TL0 = 0xBF;
+  49   1        TH0 = 0xFC;
+  50   1        TF0 = 0;
+  51   1        
+  52   1        //starte den Timer
+  53   1        TR0 = 1;
+  54   1        
+C51 COMPILER V9.60.0.0   SYSTEM                                                            11/16/2019 23:18:58 PAGE 2   
+
+  55   1      }
+  56          
+  57          /*
+  58            When the message has been received, counterRead equals PAYLOAD_RECEIVED (11).
+  59            After processing input data of the payload, counterRead must be set to 1.
+  60          
+  61          */
+  62          uchar serialReceiveChar(void)
+  63          {
+  64   1        P2 = counterRead;
+  65   1        if(RI)
+  66   1        {
+  67   2          if(counterRead <= PAYLOAD_LENGTH)
+  68   2          {
+  69   3            stSotPayloadIn.aSotPayload[counterRead] = SBUF;
+  70   3            
+  71   3            counterRead++;
+  72   3            RI = 0;
+  73   3          }
+  74   2          else
+  75   2          {
+  76   3            //wait for the system to send payload to master
+  77   3            if(stSotPayloadIn.aSotPayload[PAYLOAD_LENGTH] == '@')
+  78   3            {   
+  79   4              //End message received
+  80   4              return 1;
+  81   4            }
+  82   3            else
+  83   3            {
+  84   4              __protocolError = 1;
+  85   4              return 2;
+  86   4            }
+  87   3          }   
+  88   2        }
+  89   1        
+  90   1        return 0;
+  91   1      }
+  92          
+  93          void serialSendChar(void)
+  94          {
+  95   1        if(sendSotPayload)
+  96   1        {
+  97   2          if(TI)
+  98   2          {
+  99   3            SBUF = stSotPayloadOut.aSotPayload[counterWrite];
+ 100   3            if(counterWrite == PAYLOAD_LENGTH)
+ 101   3            {
+ 102   4              sendSotPayload = 0;
+ 103   4              counterWrite = 1;
+ 104   4            }
+ 105   3            else
+ 106   3              counterWrite++;
+ 107   3            
+ 108   3            TI = 0;
+ 109   3          }
+ 110   2        }
+ 111   1      }
+ 112          
+ 113          uchar waitEndCycle(void)
+ 114          {
+ 115   1        /*
+ 116   1          check if tf0 is already set before starting the wait_end_cycle loop
+C51 COMPILER V9.60.0.0   SYSTEM                                                            11/16/2019 23:18:58 PAGE 3   
+
+ 117   1          if tf0 is alread set it means that we have exceeded the cycle limit
+ 118   1          this will set the cycleTimeError and stop the machine
+ 119   1        
+ 120   1        */
+ 121   1        if(!TF0)
+ 122   1        {
+ 123   2          //uchar retVal;
+ 124   2          
+ 125   2          //retVal = serialReceiveChar();
+ 126   2          //if(retVal == 1)
+ 127   2          //  __debugSignal1 = 1;
+ 128   2          
+ 129   2          //serialSendChar();
+ 130   2          while(!TF0);
+ 131   2          
+ 132   2          return 1;
+ 133   2        }
+ 134   1        else
+ 135   1        {
+ 136   2          __systemError = 1;
+ 137   2          return 2;
+ 138   2        }
+ 139   1      }
+ 140          
+ 141          uchar delay(uint delayInMs, uint* delayBuffer)
+ 142          {
+ 143   1        //Null pointer exception
+ 144   1        if (delayBuffer == 0)
+ 145   1          return -1;
+ 146   1      
+ 147   1        if (delayInMs > *delayBuffer)
+ 148   1        {
+ 149   2          *delayBuffer = *delayBuffer+1;
+ 150   2          return 0;
+ 151   2        }
+ 152   1        else
+ 153   1        {
+ 154   2          return 1;
+ 155   2        }
+ 156   1      
+ 157   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    177    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     35    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
